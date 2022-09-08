@@ -1,1 +1,1 @@
-matheussquiles@gmail.com,6560064,/home/matheus/eclipse-workspace/Personal_Projects/bot/src/main/resources/chromedriver
+matheussquiles@gmail.com,6560064,C:\Users\mathe\Desktop\BOT\chromedriver.exe

@@ -10,7 +10,7 @@ import bot.entities.Login;
 
 public class ExportLoginData {
 	
-	private static final String PATH_LOGIN_DATA = "../bot/src/main/resources/login.txt";
+	private static final String PATH_LOGIN_DATA = "C:/Bot_Files/login.txt";
 	
 	private PrintWriter gravarArq;
 
