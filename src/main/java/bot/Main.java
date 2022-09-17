@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) throws IOException  {
 		
 		checkArquivoLogin();
-		new LoginScreen("Insira seu login e senha no ChatGuru", 600, 250);
+		new LoginScreen("Insira seu login e senha do ChatGuru", 600, 250);
 	}
 
 	private static void checkArquivoLogin() throws IOException {

@@ -3,11 +3,14 @@ package bot.entities;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Person implements Serializable{
 	
 	private String name;
+	private List<String> acessos;
 	private Integer qtMessages;
 
 	private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
@@ -24,8 +27,8 @@ public class Person implements Serializable{
 	}
 	
 	public Person(String name) {
-		super();
 		this.name = name;
+		this.acessos = new ArrayList<>();
 	}
 
 	public String getName() {
@@ -47,4 +50,16 @@ public class Person implements Serializable{
 		this.qtMessages = qtMessages;
 		changeSupport.firePropertyChange("qtMessages", oldValue, qtMessages);
 	}
+
+	public List<String> getAcessos() {
+		return acessos;
+	}
+
+	public void setAcessos(List<String> acessos) {
+		Object oldValue = this.acessos;
+		this.acessos = acessos;
+		changeSupport.firePropertyChange("acessos", oldValue, acessos);
+	}
+	
+	
 }
