@@ -15,6 +15,7 @@ import bot.ui.components.DateFormater;
 public class Connection {
 
 	private static final String PATH_TABLE = "//*[@id=\"tags_table\"]";
+	private static final String PATH_TABLE2 = "//*[@id=\"tags_table\"]/tbody/tr";
 	private static final String BT_GERAR_RELATORIO = "/html/body/div[2]/div/div[2]/div[2]/div/form/div[2]/div/button";
 	private static final String DT_FINAL = "/html/body/div[2]/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div[3]/input";
 	private static final String DT_INICIAL = "/html/body/div[2]/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div[2]/input";
@@ -77,6 +78,7 @@ public class Connection {
 		WebElement btGerarRelatorio = driver.findElement(By.xpath(BT_GERAR_RELATORIO));
 		btGerarRelatorio.click();
 		
+		Thread.sleep(2000);
 		getTable(driver);
 		
 		
