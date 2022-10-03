@@ -1,6 +1,7 @@
 package bot.connection;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -9,13 +10,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import bot.entities.Acesso;
 import bot.entities.Login;
+import bot.export.Export;
 import bot.ui.components.DateFormater;
+import io.opentelemetry.api.internal.StringUtils;
 
 public class Connection {
 
-	private static final String PATH_TABLE = "//*[@id=\"tags_table\"]";
-	private static final String PATH_TABLE2 = "//*[@id=\"tags_table\"]/tbody/tr";
+	private static final String PATH_TABLE = "//*[@id=\"tags_table\" and not(small)]";
 	private static final String BT_GERAR_RELATORIO = "/html/body/div[2]/div/div[2]/div[2]/div/form/div[2]/div/button";
 	private static final String DT_FINAL = "/html/body/div[2]/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div[3]/input";
 	private static final String DT_INICIAL = "/html/body/div[2]/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div[2]/input";
@@ -39,7 +42,7 @@ public class Connection {
 		driver.get(LINK_CHAT_GURU);
 		executeBot(driver, login);
 		
-//		driver.close();
+
 		
 	}
 	
@@ -81,6 +84,7 @@ public class Connection {
 		Thread.sleep(2000);
 		getTable(driver);
 		
+		driver.close();
 		
 	}
 
@@ -103,16 +107,29 @@ public class Connection {
 		List<WebElement> rowList = table.findElements(By.tagName("tr"));
 		
 		List<WebElement> columnsList = null ;
+		List<Acesso> acessos = new ArrayList<Acesso>();
+		Export export = new Export();
 		
 		for (WebElement row : rowList) {
-			System.out.println();
+//			System.out.println();
 			columnsList = row.findElements(By.tagName("td"));
+			String[] singleAcesso = new String[6];
 			
-			for (WebElement column : columnsList) {
-				System.out.println(column.getText()+ ",");
+			for(int i = 0; i < columnsList.size(); i++) {
+//				System.out.println(columnsList.get(i).getText()+ ",");
+				if(!StringUtils.isNullOrEmpty(columnsList.get(i).getText())) {
+					String str1 = columnsList.get(i).getText();
+					String[] str2 = str1.split("\n");
+					
+					singleAcesso[i] = str2[0];
+				}
 			}
-			
+			if(!columnsList.isEmpty()) {
+				acessos.add(new Acesso(singleAcesso[0], singleAcesso[1], singleAcesso[2], singleAcesso[3], singleAcesso[4], singleAcesso[5]));
+			}
 		}
+		export.exportToCsv(acessos);
+		
 	}
 	
 }
