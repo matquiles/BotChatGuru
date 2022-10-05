@@ -30,6 +30,7 @@ public class ExportLoginData {
 			savedLogin.setUser(vect[0]);
 			savedLogin.setPassword(vect[1]);
 			savedLogin.setDriverPath(vect[2]);
+			savedLogin.setDaysBefore(1);
 			
 		}
 		catch (Exception e) {

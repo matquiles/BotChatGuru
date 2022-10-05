@@ -10,6 +10,7 @@ import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
+import bot.bindings.BindingIntegerField;
 import bot.bindings.BindingPasswordField;
 import bot.bindings.BindingTextField;
 import bot.connection.Connection;
@@ -32,6 +33,8 @@ public class LoginScreen extends Form implements DefaultForm{
 	private JButton btSelectPath;
 	
 	private ExportLoginData savedLoginCheck;
+
+	private BindingIntegerField txQtdDiasAnteriores;
 
 	public LoginScreen(String title, int x, int y) {
 		super(title, x, y);
@@ -66,6 +69,8 @@ public class LoginScreen extends Form implements DefaultForm{
 			model.getBean().setDriverPath(filePath);
 		});
 		
+		txQtdDiasAnteriores = new BindingIntegerField(model.getModel("daysBefore"));
+		
 		btnOk = new JButton("Ok");
 		btnOk.addActionListener(act -> {
 			Connection connection = new Connection();
@@ -90,13 +95,8 @@ public class LoginScreen extends Form implements DefaultForm{
 		builder.nextLine();
 		builder.append("Caminho Driver", txDriverPath, builder.getColumnCount()-4);
 		builder.append(btSelectPath);
+		builder.append("Dias Anteriores", txQtdDiasAnteriores,3);
 		//gambiarra
-		builder.append("");
-		builder.append("");
-		builder.append("");
-		builder.append("");
-		builder.append("");
-		builder.append("");
 		builder.append(btnOk);
 
 		frame.add(builder.getPanel(),  BorderLayout.CENTER);

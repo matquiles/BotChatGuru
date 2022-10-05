@@ -22,7 +22,7 @@ public class Export {
 
 			beanToCsv.setOrderedResults(true);
 			beanToCsv.write(acessos);
-
+			
 			writer.flush();
 			writer.close();
 

@@ -18,5 +18,18 @@ public abstract class DateFormater {
 		
 		return dayFormat.format(data);
 	}
+	
+	public static String getDaysBefore(Integer days) {
+
+		Date data = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(data);
+		cal.add(Calendar.DATE, -days);
+		data = cal.getTime();
+
+		SimpleDateFormat dayFormat = new SimpleDateFormat("dd-MM-aaaa");
+
+		return dayFormat.format(data);
+	}
 
 }

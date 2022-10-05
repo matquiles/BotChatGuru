@@ -75,10 +75,10 @@ public class Connection {
 		listUsuariuos.click();
 		
 		WebElement btDtInicial = driver.findElement(By.xpath(DT_INICIAL));
-		btDtInicial.sendKeys(DateFormater.getYesterday());
+		btDtInicial.sendKeys(DateFormater.getDaysBefore(login.getDaysBefore()));
 		
 		WebElement btDtFinal = driver.findElement(By.xpath(DT_FINAL));
-		btDtFinal.sendKeys(DateFormater.getYesterday());
+		btDtFinal.sendKeys(DateFormater.getDaysBefore(login.getDaysBefore()));
 		
 		WebElement btGerarRelatorio = driver.findElement(By.xpath(BT_GERAR_RELATORIO));
 		btGerarRelatorio.click();

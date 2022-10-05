@@ -11,6 +11,7 @@ public class Login implements Serializable{
 	private String user;
 	private String password;
 	private String driverPath;
+	private Integer daysBefore;
 	
 	public Login() {
 	}
@@ -71,6 +72,17 @@ public class Login implements Serializable{
 	
 	public String toFormatedString() {
 		return getUser() + "," + getPassword() + "," + getDriverPath();
+	}
+
+	public Integer getDaysBefore() {
+		return daysBefore;
+	}
+
+	public void setDaysBefore(Integer daysBefore) {
+		Object oldValue = this.daysBefore;
+		this.daysBefore = daysBefore;
+		changeSupport.firePropertyChange("daysBefore", oldValue, daysBefore);
+
 	}
 
 
