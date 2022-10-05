@@ -20,7 +20,7 @@ public class Export {
 			Writer writer = Files.newBufferedWriter(Paths.get(PATH_LOGIN_DATA));
 			StatefulBeanToCsv<Acesso> beanToCsv = new StatefulBeanToCsvBuilder<Acesso>(writer).build();
 
-			beanToCsv.setOrderedResults(false);
+			beanToCsv.setOrderedResults(true);
 			beanToCsv.write(acessos);
 
 			writer.flush();

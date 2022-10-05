@@ -18,6 +18,8 @@ import io.opentelemetry.api.internal.StringUtils;
 
 public class Connection {
 
+	
+	private static final String PATH_NEXT_PAGE = "//*[@id=\"accesses_report_results\"]/div[2]/div/nav/ul/li[4]/a";
 	private static final String PATH_TABLE = "//*[@id=\"tags_table\" and not(small)]";
 	private static final String BT_GERAR_RELATORIO = "/html/body/div[2]/div/div[2]/div[2]/div/form/div[2]/div/button";
 	private static final String DT_FINAL = "/html/body/div[2]/div/div[2]/div[2]/div/form/div[1]/div[2]/div/div[3]/input";
@@ -81,11 +83,23 @@ public class Connection {
 		WebElement btGerarRelatorio = driver.findElement(By.xpath(BT_GERAR_RELATORIO));
 		btGerarRelatorio.click();
 		
-		Thread.sleep(2000);
-		getTable(driver);
+		exporResults(driver);
 		
 		driver.close();
+	}
+	
+	private void exporResults(ChromeDriver driver) throws InterruptedException {
+		Thread.sleep(2000);
+		List<Acesso> acessos = getTable(driver);
 		
+		Export export = new Export();
+		WebElement nextPage = driver.findElement(By.xpath(PATH_NEXT_PAGE));
+		if(nextPage!=null) {
+			nextPage.click();
+			Thread.sleep(2000);
+			acessos.addAll(getTable(driver));
+		}
+		export.exportToCsv(acessos);
 	}
 
 
@@ -96,19 +110,20 @@ public class Connection {
 									.visibilityOfAllElementsLocatedBy(By.xpath(EXTRAIR_LISTA)));
 
 		for (WebElement cb : elements) {
-			cb.click();
+			if(!cb.getText().equals("Matheus Quiles")) {
+				cb.click();
+			}
 		}
-
+		
 	}
 	
-	private void getTable(ChromeDriver driver) {
+	private List<Acesso> getTable(ChromeDriver driver) {
 		
 		WebElement table = driver.findElement(By.xpath(PATH_TABLE));
 		List<WebElement> rowList = table.findElements(By.tagName("tr"));
 		
 		List<WebElement> columnsList = null ;
 		List<Acesso> acessos = new ArrayList<Acesso>();
-		Export export = new Export();
 		
 		for (WebElement row : rowList) {
 //			System.out.println();
@@ -127,8 +142,10 @@ public class Connection {
 			if(!columnsList.isEmpty()) {
 				acessos.add(new Acesso(singleAcesso[0], singleAcesso[1], singleAcesso[2], singleAcesso[3], singleAcesso[4], singleAcesso[5]));
 			}
+			
 		}
-		export.exportToCsv(acessos);
+	
+		return acessos;
 		
 	}
 	
