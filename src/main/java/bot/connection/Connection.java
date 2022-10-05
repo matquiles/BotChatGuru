@@ -93,13 +93,19 @@ public class Connection {
 		List<Acesso> acessos = getTable(driver);
 		
 		Export export = new Export();
-		WebElement nextPage = driver.findElement(By.xpath(PATH_NEXT_PAGE));
-		if(nextPage!=null) {
-			nextPage.click();
-			Thread.sleep(2000);
-			acessos.addAll(getTable(driver));
+		try {
+			WebElement nextPage = driver.findElement(By.xpath(PATH_NEXT_PAGE));
+			if(nextPage!=null) {
+				nextPage.click();
+				Thread.sleep(2000);
+				acessos.addAll(getTable(driver));
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			export.exportToCsv(acessos);
 		}
-		export.exportToCsv(acessos);
 	}
 
 
